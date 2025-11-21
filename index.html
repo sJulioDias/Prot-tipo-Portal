@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documento de lista de tarefas</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header>
+    <h1>Modelo de Lista de tarefas: Curso Presencial</h1>
+</header>
+
+<main>
+    <h2>Lista de tarefas - Analista Pleno</h2>
+    <div class="contador-container">
+        <div class="contador" id="contador-pleno">0 tarefas de 15 realizadas</div>
+        <div class="progress-bar"><div class="progress" id="barra-pleno"></div></div>
+    </div>
+    <ul class="task-list" id="lista-pleno">
+        <li><input type="checkbox"> Chat Planejamento</li>
+        <li><input type="checkbox"> Reserva sala</li>
+        <li><input type="checkbox"> Validação/Definição Educador</li>
+        <li><input type="checkbox"> Consultar impedimentos (ODI/Portal Jurídico)</li>
+        <li><input type="checkbox"> Confirmação Educador</li>
+        <li><input type="checkbox"> Compartilhar identificação porta no chat planejamento</li>
+        <li><input type="checkbox"> Deslocamento Educador</li>
+        <li><input type="checkbox"> Compartilhar Material do evento para impressão</li>
+        <li><input type="checkbox"> Agendar Dia Prévio / preencher chat</li>
+        <li><input type="checkbox"> Realizar Dia Prévio</li>
+        <li><input type="checkbox"> Registrar Habilitação HH Educador/es</li>
+        <li><input type="checkbox"> Inscrever educador como participante (caso não tenha o curso)</li>
+        <li><input type="checkbox"> Validar Evento</li>
+        <li><input type="checkbox"> Encerramento do chat Planejamento/Tratativas</li>
+        <li><input type="checkbox"> Arquivar lista de presença</li>
+    </ul>
+
+    <h2>Lista de tarefas - Analista Júnior ou Assistente</h2>
+    <div class="contador-container">
+        <div class="contador" id="contador-junior">0 tarefas de 13 realizadas</div>
+        <div class="progress-bar"><div class="progress" id="barra-junior"></div></div>
+    </div>
+    <ul class="task-list" id="lista-junior">
+        <li><input type="checkbox"> Divulgação das vagas <input type="date"></li>
+        <li><input type="checkbox"> Confirmação das inscrições agendando reunião no Teams</li>
+        <li><input type="checkbox"> Chat Orientações Participantes</li>
+        <li><input type="checkbox"> Deslocamentos participantes</li>
+        <li><input type="checkbox"> Cadastrar Evento - Portal da Super <input type="text" placeholder="Digite o número do evento"></li>
+        <li><input type="checkbox"> Liberar material na Ciatech</li>
+        <li><input type="checkbox"> Compartilhar lista participantes no chat planejamento</li>
+        <li><input type="checkbox"> Compartilhar lista de presença chat Dia Prévio</li>
+        <li><input type="checkbox"> Verificar participante com necessidade de adaptação</li>
+        <li><input type="checkbox"> Mensagem para realizar Verificação de Aprendizagem/Avaliação de Reação aos participantes (Workflow) <input type="date"></li>
+        <li><input type="checkbox"> Compartilhar relatório da Avaliação de Reação no chat Dia Prévio com educador/es/as</li>
+        <li><input type="checkbox"> Encerramento do chat Dia Prévio</li>
+        <li><input type="checkbox"> Encerramento do chat Deslocamento participantes (se houver)</li>
+    </ul>
+
+    <h2>Adicionar nova tarefa</h2>
+    <div class="add-task">
+        <input type="text" id="new-task" placeholder="Nome da nova tarefa">
+        <select name="Selecione-lista">
+            <option value="valor1">Analista Pleno</option>
+            <option value="valor2">Analista Júnior</option>
+        </select>
+        <button onclick="adicionarTarefa()">Adicionar</button>
+    </div>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
