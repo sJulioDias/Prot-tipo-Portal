@@ -1,4 +1,3 @@
-
 function atualizarContador(listaId, contadorId, barraId) {
     const lista = document.querySelectorAll(`#${listaId} input[type="checkbox"]`);
     const feitas = document.querySelectorAll(`#${listaId} input[type="checkbox"]:checked`).length;
@@ -16,7 +15,17 @@ const listas = [
 
 listas.forEach(({ listaId, contadorId, barraId }) => {
     document.querySelectorAll(`#${listaId} input[type="checkbox"]`).forEach(checkbox => {
-        checkbox.addEventListener('change', () => atualizarContador(listaId, contadorId, barraId));
+        checkbox.addEventListener('change', () => {
+            atualizarContador(listaId, contadorId, barraId);
+
+            // Aplica ou remove a classe .completed no <li>
+            const li = checkbox.parentElement;
+            if (checkbox.checked) {
+                li.classList.add('completed');
+            } else {
+                li.classList.remove('completed');
+            }
+        });
     });
     atualizarContador(listaId, contadorId, barraId);
 });
@@ -30,7 +39,6 @@ function adicionarTarefa() {
         return;
     }
 
-    // Define IDs com base na lista escolhida
     let listaId, contadorId, barraId;
     if (listaSelecionada === 'tarefa-analista-pleno') {
         listaId = 'lista-pleno';
@@ -42,38 +50,38 @@ function adicionarTarefa() {
         barraId = 'barra-junior';
     }
 
-    // Cria o novo item da lista
     const li = document.createElement('li');
 
-    // Checkbox
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    checkbox.addEventListener('change', () => atualizarContador(listaId, contadorId, barraId));
+    checkbox.addEventListener('change', () => {
+        atualizarContador(listaId, contadorId, barraId);
 
-    // Texto da tarefa
+        // Aplica ou remove a classe .completed
+        if (checkbox.checked) {
+            li.classList.add('completed');
+        } else {
+            li.classList.remove('completed');
+        }
+    });
+
     const texto = document.createTextNode(' ' + tarefa);
 
-    // Botão de exclusão
     const botaoExcluir = document.createElement('button');
     botaoExcluir.textContent = 'Excluir';
     botaoExcluir.classList.add('btn-excluir');
-        
     botaoExcluir.addEventListener('click', () => {
         li.remove();
         atualizarContador(listaId, contadorId, barraId);
     });
 
-    // Monta o li
     li.appendChild(checkbox);
     li.appendChild(texto);
     li.appendChild(botaoExcluir);
 
-    // Adiciona à lista
     document.getElementById(listaId).appendChild(li);
 
-    // Limpa o campo
     document.getElementById('new-task').value = '';
 
-    // Atualiza contador
     atualizarContador(listaId, contadorId, barraId);
 }
