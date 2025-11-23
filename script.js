@@ -56,9 +56,7 @@ function adicionarTarefa() {
     // Botão de exclusão
     const botaoExcluir = document.createElement('button');
     botaoExcluir.textContent = 'Excluir';
-    botaoExcluir.style.backgroundColor = '#f44336';
-    botaoExcluir.style.color = 'white';
-    botaoExcluir.style.border = 'none';
+    botaoExcluir.classList.add('btn-excluir');
         
     botaoExcluir.addEventListener('click', () => {
         li.remove();
