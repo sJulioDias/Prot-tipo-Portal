@@ -32,7 +32,7 @@ function adicionarTarefa() {
 
     // Define IDs com base na lista escolhida
     let listaId, contadorId, barraId;
-    if (listaSelecionada === 'valor1') {
+    if (listaSelecionada === 'tarefa-analista-pleno') {
         listaId = 'lista-pleno';
         contadorId = 'contador-pleno';
         barraId = 'barra-pleno';
