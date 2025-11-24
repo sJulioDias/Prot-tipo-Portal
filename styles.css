@@ -121,9 +121,9 @@ img {
     }
 
 .btn-excluir {
-    background-color: #f44336;
-    color: white;
-    border: none;
+    background-color: white;
+    color: #f44336;
+    border: 2px solid #f44336;
     padding: 6px 10px;
     border-radius: 4px;
     cursor: pointer;
@@ -131,5 +131,6 @@ img {
     }
      
 .btn-excluir:hover {
-    background-color: #d32f2f;
+    background-color: #f44336;
+    color: white;
     }
