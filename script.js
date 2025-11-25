@@ -108,3 +108,7 @@ function naoSeAplica(botao) {
 });
     
 }
+
+function salvarAlteracoes() {
+    alert('Função ainda não implementada :(');
+}
