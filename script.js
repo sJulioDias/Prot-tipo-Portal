@@ -1,7 +1,8 @@
 
 function atualizarContador(listaId, contadorId, barraId) {
-    const lista = document.querySelectorAll(`#${listaId} input[type="checkbox"]`);
-    const feitas = document.querySelectorAll(`#${listaId} input[type="checkbox"]:checked`).length;
+    // Ignora checkboxes desativados
+    const lista = document.querySelectorAll(`#${listaId} input[type="checkbox"]:not([disabled])`);
+    const feitas = document.querySelectorAll(`#${listaId} input[type="checkbox"]:checked:not([disabled])`).length;
     const total = lista.length;
     const percentual = total > 0 ? (feitas / total) * 100 : 0;
 
@@ -87,8 +88,10 @@ function naoSeAplica(botao) {
     const li = botao.parentElement;
     li.style.textDecoration = "line-through";
     li.style.opacity = "0.6";
-    li.querySelector("input[type='checkbox']").disabled = true;
-    li.querySelector("input[type='checkbox']").checked = false;
+
+    const checkbox = li.querySelector("input[type='checkbox']");
+    checkbox.disabled = true; // desativa
+    checkbox.checked = false; // garante que não conte como feita
     li.classList.add('inaplicavel');
 
     botao.remove();
@@ -98,10 +101,12 @@ function naoSeAplica(botao) {
     excluidoTexto.style.color = "red";
     li.appendChild(excluidoTexto);
 
-    // Atualiza contadores
-    listas.forEach(({ listaId, contadorId, barraId }) => {
-        atualizarContador(listaId, contadorId, barraId);
-    });
+    // Atualiza contador ignorando checkbox desativado
+    const listaId = li.parentElement.id;
+    const contadorId = listaId === 'lista-pleno' ? 'contador-pleno' : 'contador-junior';
+    const barraId = listaId === 'lista-pleno' ? 'barra-pleno' : 'barra-junior';
+
+    atualizarContador(listaId, contadorId, barraId);
 }
 
 function salvarAlteracoes() {
