@@ -107,7 +107,7 @@ button {
     font-weight: bold;
     transition: all 0.3s ease;
     width: 100%;
-    max-width: 100px;
+    max-width: 120px;
 }
 
 button:hover {
