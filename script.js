@@ -94,13 +94,6 @@ function naoSeAplica(botao) {
     checkbox.checked = false; // garante que não conte como feita
     li.classList.add('inaplicavel');
 
-    botao.remove();
-    const excluidoTexto = document.createElement("span");
-    excluidoTexto.textContent = "Excluído";
-    excluidoTexto.style.fontWeight = "bold";
-    excluidoTexto.style.color = "red";
-    li.appendChild(excluidoTexto);
-
     // Atualiza contador ignorando checkbox desativado
     const listaId = li.parentElement.id;
     const contadorId = listaId === 'lista-pleno' ? 'contador-pleno' : 'contador-junior';
