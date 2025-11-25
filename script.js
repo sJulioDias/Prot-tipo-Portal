@@ -1,16 +1,26 @@
+
 function atualizarContador(listaId, contadorId, barraId) {
     const lista = document.querySelectorAll(`#${listaId} input[type="checkbox"]`);
     const feitas = document.querySelectorAll(`#${listaId} input[type="checkbox"]:checked`).length;
     const total = lista.length;
     const percentual = total > 0 ? (feitas / total) * 100 : 0;
-     //Barra de tarefas dourada
-    if (percentual === 100) {
-    document.getElementById(barraId).style.backgroundColor = "#FFD700"; // dourado
-    } else {
-    document.getElementById(barraId).style.backgroundColor = "#4CAF50"; // verde padrão
-}
+
+    const barra = document.getElementById(barraId);
+    barra.style.backgroundColor = percentual === 100 ? "#FFD700" : "#4CAF50";
+    barra.style.width = `${percentual}%`;
+
     document.getElementById(contadorId).textContent = `${feitas} tarefas de ${total} realizadas`;
-    document.getElementById(barraId).style.width = `${percentual}%`;
+}
+
+// Função para configurar comportamento do checkbox
+function configurarCheckbox(checkbox, listaId, contadorId, barraId) {
+    checkbox.addEventListener('change', () => {
+        atualizarContador(listaId, contadorId, barraId);
+
+        // Aplica ou remove a classe .completed no <li>
+        const li = checkbox.parentElement;
+        li.classList.toggle('completed', checkbox.checked);
+    });
 }
 
 const listas = [
@@ -18,19 +28,10 @@ const listas = [
     { listaId: 'lista-junior', contadorId: 'contador-junior', barraId: 'barra-junior' }
 ];
 
+// Configura os checkboxes existentes
 listas.forEach(({ listaId, contadorId, barraId }) => {
     document.querySelectorAll(`#${listaId} input[type="checkbox"]`).forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            atualizarContador(listaId, contadorId, barraId);
-
-            // Aplica ou remove a classe .completed no <li>
-            const li = checkbox.parentElement;
-            if (checkbox.checked) {
-                li.classList.add('completed');
-            } else {
-                li.classList.remove('completed');
-            }
-        });
+        configurarCheckbox(checkbox, listaId, contadorId, barraId);
     });
     atualizarContador(listaId, contadorId, barraId);
 });
@@ -59,16 +60,7 @@ function adicionarTarefa() {
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    checkbox.addEventListener('change', () => {
-        atualizarContador(listaId, contadorId, barraId);
-
-        // Aplica ou remove a classe .completed
-        if (checkbox.checked) {
-            li.classList.add('completed');
-        } else {
-            li.classList.remove('completed');
-        }
-    });
+    configurarCheckbox(checkbox, listaId, contadorId, barraId);
 
     const texto = document.createTextNode(' ' + tarefa);
 
@@ -91,16 +83,14 @@ function adicionarTarefa() {
     atualizarContador(listaId, contadorId, barraId);
 }
 
-
 function naoSeAplica(botao) {
     const li = botao.parentElement;
-    li.style.textDecoration = "line-through"; // risca a tarefa
-    li.style.opacity = "0.6"; // deixa mais apagada
-    li.querySelector("input[type='checkbox']").disabled = true; // desativa o checkbox
+    li.style.textDecoration = "line-through";
+    li.style.opacity = "0.6";
+    li.querySelector("input[type='checkbox']").disabled = true;
     li.querySelector("input[type='checkbox']").checked = false;
     li.classList.add('inaplicavel');
 
-    // Remove o botão e adiciona o texto "Excluído"
     botao.remove();
     const excluidoTexto = document.createElement("span");
     excluidoTexto.textContent = "Excluído";
@@ -110,11 +100,6 @@ function naoSeAplica(botao) {
 
     // Atualiza contadores
     listas.forEach(({ listaId, contadorId, barraId }) => {
-        document.querySelectorAll(`#${listaId} input[type="checkbox"]`).forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                atualizarContador(listaId, contadorId, barraId);
-            });
-        });
         atualizarContador(listaId, contadorId, barraId);
     });
 }
