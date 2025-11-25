@@ -90,3 +90,21 @@ function adicionarTarefa() {
 
     atualizarContador(listaId, contadorId, barraId);
 }
+
+function naoSeAplica(botao) {
+    const li = botao.parentElement;
+    li.style.textDecoration = "line-through"; // risca a tarefa
+    li.style.opacity = "0.6"; // deixa mais apagada
+    li.querySelector("input[type='checkbox']").disabled = true; // desativa o checkbox
+    li.querySelector("input[type='checkbox']").checked = false;
+    li.classList.add('inaplicavel');
+    listas.forEach(({ listaId, contadorId, barraId }) => {
+    document.querySelectorAll(`#${listaId} input[type="checkbox"]`).forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            atualizarContador(listaId, contadorId, barraId);
+        });
+    });
+    atualizarContador(listaId, contadorId, barraId);
+});
+    
+}
