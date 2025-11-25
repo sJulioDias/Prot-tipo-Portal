@@ -19,7 +19,8 @@
         <div class="progress-bar"><div class="progress" id="barra-pleno"></div></div>
     </div>
     <ul class="task-list" id="lista-pleno">
-        <li><input type="checkbox"> Chat Planejamento</li>
+        <li><input type="checkbox"> Chat Planejamento
+        <button onclick="naoSeAplica(this)" class="btn-excluir">Não se Aplica</button></li>
         <li><input type="checkbox"> Reserva sala</li>
         <li><input type="checkbox"> Validação/Definição Educador</li>
         <li><input type="checkbox"> Consultar impedimentos (ODI/Portal Jurídico)</li>
@@ -44,7 +45,8 @@
     <ul class="task-list" id="lista-junior">
         <li><input type="checkbox"> Divulgação das vagas <input type="date"></li>
         <li><input type="checkbox"> Confirmação das inscrições agendando reunião no Teams</li>
-        <li><input type="checkbox"> Chat Orientações Participantes (se necessário)</li>
+        <li><input type="checkbox"> Chat Orientações Participantes (se necessário)
+        <button onclick="naoSeAplica(this)" class="btn-excluir">Não se Aplica</button></li>
         <li><input type="checkbox"> Deslocamentos participantes</li>
         <li><input type="checkbox"> Cadastrar Evento - Portal da Super <input type="text" placeholder="Digite o número do evento"></li>
         <li><input type="checkbox"> Liberar material na Ciatech</li>
@@ -54,7 +56,8 @@
         <li><input type="checkbox"> Mensagem para realizar Verificação de Aprendizagem/Avaliação de Reação aos participantes (Workflow) <input type="date"></li>
         <li><input type="checkbox"> Compartilhar relatório da Avaliação de Reação no chat Dia Prévio com educador/es/as</li>
         <li><input type="checkbox"> Encerramento do chat Dia Prévio</li>
-        <li><input type="checkbox"> Encerramento do chat Deslocamento participantes (se houver)</li>
+        <li><input type="checkbox"> Encerramento do chat Deslocamento participantes (se houver)
+        <button onclick="naoSeAplica(this)" class="btn-excluir">Não se Aplica</button></li>
     </ul>
 
     <h2>Adicionar nova tarefa</h2>
