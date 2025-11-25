@@ -3,7 +3,12 @@ function atualizarContador(listaId, contadorId, barraId) {
     const feitas = document.querySelectorAll(`#${listaId} input[type="checkbox"]:checked`).length;
     const total = lista.length;
     const percentual = total > 0 ? (feitas / total) * 100 : 0;
-
+     //Barra de tarefas dourada
+    if (percentual === 100) {
+    document.getElementById(barraId).style.backgroundColor = "#FFD700"; // dourado
+    } else {
+    document.getElementById(barraId).style.backgroundColor = "#4CAF50"; // verde padrão
+}
     document.getElementById(contadorId).textContent = `${feitas} tarefas de ${total} realizadas`;
     document.getElementById(barraId).style.width = `${percentual}%`;
 }
