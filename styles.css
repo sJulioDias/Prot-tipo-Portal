@@ -68,6 +68,9 @@ li.completed {
     background-color: #d9f3d9; /* verde claro */
 }
 
+li.inaplicavel {
+    background-color: #f3c8c8; 
+}
 
 input[type="text"], select {
     padding: 10px;
