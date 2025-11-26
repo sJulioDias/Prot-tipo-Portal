@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <img src="Tela Portal.png" alt="Descrição da imagem">
+<div class="cabecalho">
 <header>
     <h1>Lista de tarefas: Curso Presencial</h1>
 </header>
@@ -17,7 +17,8 @@
     <div class="contador-container">
         <div class="contador" id="contador-pleno">0 tarefas de 15 realizadas</div>
         <div class="progress-bar"><div class="progress" id="barra-pleno"></div></div>
-    </div>
+    </div>    
+</div>
     <ul class="task-list" id="lista-pleno">
         <li><input type="checkbox"> Chat Planejamento
         <button onclick="naoSeAplica(this)" class="btn-excluir">Retirar</button></li>
@@ -50,14 +51,15 @@
         <li><input type="checkbox"> Arquivar lista de presença
         <button onclick="naoSeAplica(this)" class="btn-excluir">Retirar</button></li>
     </ul>
-
+    <div class="cabecalho">
     <h2>Analista Júnior ou Assistente</h2>
     <div class="contador-container">
         <div class="contador" id="contador-junior">0 tarefas de 13 realizadas</div>
         <div class="progress-bar"><div class="progress" id="barra-junior"></div></div>
     </div>
+    </div>
     <ul class="task-list" id="lista-junior">
-        <li><input type="checkbox"> Divulgação das vagas
+        <li><input type="checkbox"> Divulgação das vagas <input type="date">
         <button onclick="naoSeAplica(this)" class="btn-excluir">Retirar</button></li>
         <li><input type="checkbox"> Confirmação das inscrições agendando reunião no Teams
         <button onclick="naoSeAplica(this)" class="btn-excluir">Retirar</button></li>
@@ -75,7 +77,7 @@
         <button onclick="naoSeAplica(this)" class="btn-excluir">Retirar</button></li>
         <li><input type="checkbox"> Verificar participante com necessidade de adaptação
         <button onclick="naoSeAplica(this)" class="btn-excluir">Retirar</button></li>
-        <li><input type="checkbox"> Mensagem para realizar Verificação de Aprendizagem/Avaliação de Reação aos participantes (Workflow)
+        <li><input type="checkbox"> Mensagem para realizar Verificação de Aprendizagem/Avaliação de Reação aos participantes (Workflow) <input type="date">
         <button onclick="naoSeAplica(this)" class="btn-excluir">Retirar</button></li>
         <li><input type="checkbox"> Compartilhar relatório da Avaliação de Reação no chat Dia Prévio com educador/es/as
         <button onclick="naoSeAplica(this)" class="btn-excluir">Retirar</button></li>
@@ -84,8 +86,10 @@
         <li><input type="checkbox"> Encerramento do chat Deslocamento participantes (se houver)
         <button onclick="naoSeAplica(this)" class="btn-excluir">Retirar</button></li>
     </ul>
-    
-    <div> <button onclick="salvarAlteracoes()">Salvar</button> </div>
+
+    <div>
+    <button onclick="salvarAlteracoes()">Salvar Alterações</button>
+    </div>
 
     <h2>Adicionar nova tarefa</h2>
     <div class="add-task">
