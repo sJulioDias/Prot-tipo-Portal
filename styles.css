@@ -64,6 +64,10 @@ h2 {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+.task-list li span {
+  flex: 1; /* ocupa espaço para empurrar os botões */
+}
+
 .task-list li button {
     margin-left: auto; /* empurra o botão para a direita */
 }
