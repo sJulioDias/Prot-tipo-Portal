@@ -112,6 +112,34 @@ function naoSeAplica(botao) {
        atualizarContador(listaId, contadorId, barraId);
 }
 
+function editarNome(botao) {
+    const li = botao.parentElement;
+    const textoNode = li.childNodes[1];
+    const textoAtual = textoNode.textContent.trim();
+
+    // Cria input para edição
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = textoAtual;
+
+    // Substitui o texto pelo input
+    li.replaceChild(input, textoNode);
+
+    // Quando perder o foco ou pressionar Enter, salva
+    input.addEventListener('blur', () => salvarEdicao(li, input));
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') salvarEdicao(li, input);
+    });
+
+    input.focus();
+}
+
+function salvarEdicao(li, input) {
+    const novoTexto = input.value.trim();
+    const novoNode = document.createTextNode(" " + (novoTexto || "Tarefa sem nome"));
+    li.replaceChild(novoNode, input);
+}
+
 function salvarAlteracoes() {
     alert('Função ainda não implementada :(');
 }
