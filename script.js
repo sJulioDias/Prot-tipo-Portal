@@ -86,20 +86,30 @@ function adicionarTarefa() {
 
 function naoSeAplica(botao) {
     const li = botao.parentElement;
+    const checkbox = li.querySelector("input[type='checkbox']");
+    const listaId = li.parentElement.id;
+    const contadorId = listaId === 'lista-pleno' ? 'contador-pleno' : 'contador-junior';
+    const barraId = listaId === 'lista-pleno' ? 'barra-pleno' : 'barra-junior';
+    
+    if (checkbox.disabled === true) {
+    checkbox.disabled = false; // ativa
+    li.classList = "task-list";
+    li.style.textDecoration = "";
+    li.style.opacity = "";
+    // Atualiza contador reativando o elemento
+        atualizarContador(listaId, contadorId, barraId);
+    return;
+    }
+    
     li.style.textDecoration = "line-through";
     li.style.opacity = "0.6";
 
-    const checkbox = li.querySelector("input[type='checkbox']");
     checkbox.disabled = true; // desativa
     checkbox.checked = false; // garante que não conte como feita
     li.classList.add('inaplicavel');
 
     // Atualiza contador ignorando checkbox desativado
-    const listaId = li.parentElement.id;
-    const contadorId = listaId === 'lista-pleno' ? 'contador-pleno' : 'contador-junior';
-    const barraId = listaId === 'lista-pleno' ? 'barra-pleno' : 'barra-junior';
-
-    atualizarContador(listaId, contadorId, barraId);
+       atualizarContador(listaId, contadorId, barraId);
 }
 
 function salvarAlteracoes() {
