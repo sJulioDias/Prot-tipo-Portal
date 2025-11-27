@@ -85,6 +85,17 @@ input[type="text"], select {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
+    width: 100%;
+    max-width: 3000px;
+}
+
+input[class="text-event"], select {
+    width: 100%;
+    max-width: 120px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
 }
 
 input[type="date"], select {
