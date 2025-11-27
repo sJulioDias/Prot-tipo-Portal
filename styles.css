@@ -150,3 +150,40 @@ button:hover {
 .btn-carregar:hover { background-color:  #e0c421; color: white; }
 .btn-salvar {color: #1E90FF; border: 2px solid #1E90FF; }
 .btn-salvar:hover { background-color: #1E90FF; color: white; }
+
+.btn-exportar {
+    background: white;
+    color: #FF8C00; /* laranja escuro */
+    border: 2px solid #FF8C00;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 12px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    max-width: 160px;
+}
+
+.btn-exportar:hover {
+    background: #FF8C00;
+    color: white;
+}
+
+.btn-importar {
+    background: white;
+    color: #32CD32; /* verde limão */
+    border: 2px solid #32CD32;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 12px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    max-width: 160px;
+}
+
+.btn-importar:hover {
+    background: #32CD32;
+    color: white;
+}
+
