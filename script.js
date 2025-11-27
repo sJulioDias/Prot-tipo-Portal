@@ -125,7 +125,96 @@ const salvarEdicao = (li, input) => {
     li.replaceChild(novoNode, input);
 };
 
-// Placeholder para salvar alterações
+// Função para salvar alterações no localStorage
 function salvarAlteracoes() {
-    alert('Função ainda não implementada :(');
+    const dados = {
+        pleno: [],
+        junior: []
+    };
+
+    function extrairDados(listaId) {
+        const tarefas = [];
+        document.querySelectorAll(`#${listaId} li`).forEach(li => {
+            const checkbox = li.querySelector("input[type='checkbox']");
+            const inputExtra = li.querySelector("input[type='text']");
+            const textoNode = [...li.childNodes].find(node => node.nodeType === Node.TEXT_NODE);
+            const texto = textoNode ? textoNode.textContent.trim() : "";
+
+            tarefas.push({
+                texto,
+                concluida: checkbox ? checkbox.checked : false,
+                inaplicavel: checkbox ? checkbox.disabled : false,
+                extra: inputExtra && inputExtra !== checkbox ? inputExtra.value : ""
+            });
+        });
+        return tarefas;
+    }
+
+    dados.pleno = extrairDados("lista-pleno");
+    dados.junior = extrairDados("lista-junior");
+
+    localStorage.setItem("tarefas", JSON.stringify(dados));
+    alert("Alterações salvas com sucesso!");
+}
+
+// Função para carregar alterações do localStorage
+function carregarAlteracoes() {
+    const dados = JSON.parse(localStorage.getItem("tarefas"));
+    if (!dados) {
+        alert("Nenhuma alteração salva.");
+        return;
+    }
+
+    function reconstruirLista(listaId, tarefas, contadorId, barraId) {
+        const lista = document.getElementById(listaId);
+        lista.innerHTML = "";
+
+        tarefas.forEach(tarefa => {
+            const li = document.createElement("li");
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = tarefa.concluida;
+            checkbox.disabled = tarefa.inaplicavel;
+            configurarCheckbox(checkbox, listaId, contadorId, barraId);
+
+            const textoNode = document.createTextNode(" " + tarefa.texto);
+            li.appendChild(checkbox);
+            li.appendChild(textoNode);
+
+            if (tarefa.extra) {
+                const inputExtra = document.createElement("input");
+                inputExtra.type = "text";
+                inputExtra.value = tarefa.extra;
+                li.appendChild(inputExtra);
+            }
+
+            const span = document.createElement("span");
+            li.appendChild(span);
+
+            const btnEditar = document.createElement("button");
+            btnEditar.textContent = "Editar";
+            btnEditar.classList.add("btn-editar");
+            btnEditar.onclick = () => editarNome(btnEditar);
+            li.appendChild(btnEditar);
+
+            const btnExcluir = document.createElement("button");
+            btnExcluir.textContent = "Retirar";
+            btnExcluir.classList.add("btn-excluir");
+            btnExcluir.onclick = () => naoSeAplica(btnExcluir);
+            li.appendChild(btnExcluir);
+
+            if (tarefa.concluida) li.classList.add("completed");
+            if (tarefa.inaplicavel) li.classList.add("inaplicavel");
+
+            lista.appendChild(li);
+        });
+
+        atualizarContador(listaId, contadorId, barraId);
+    }
+
+    reconstruirLista("lista-pleno", dados.pleno, "contador-pleno", "barra-pleno");
+    reconstruirLista("lista-junior", dados.junior, "contador-junior", "barra-junior");
+
+    alert("Alterações carregadas!");
 }
