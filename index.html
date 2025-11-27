@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Documento de lista de tarefas</title>
 <link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 <div class="cabecalho">
@@ -143,13 +144,21 @@
         <button onclick="naoSeAplica(this)" class="btn-excluir">Retirar</button></li>
     </ul>
 
-    <div>
-    <button onclick="salvarAlteracoes()" class="btn-salvar">Salvar Alterações</button>
-    <button onclick="carregarAlteracoes()" class="btn-carregar">Carregar Alterações</button>
-    <button onclick="exportarJSON()" class="btn-exportar">Exportar JSON</button>
-    <button onclick="importarJSON()" class="btn-importar">Importar JSON</button>
-    <div class="add-task"> <input type="file" id="importar-arquivo" accept="application/json" /> </div>
-    </div>
+<div class="menu-acoes">
+    <button onclick="salvarAlteracoes()" class="btn-salvar">
+        <i class="fas fa-save"></i> Salvar
+    </button>
+    <button onclick="carregarAlteracoes()" class="btn-carregar">
+        <i class="fas fa-folder-open"></i> Carregar
+    </button>
+    <button onclick="exportarJSON()" class="btn-exportar">
+        <i class="fas fa-file-export"></i> Exportar
+    </button>    
+    <button onclick="importarJSON()" class="btn-importar">
+        <i class="fas fa-file-import"></i> Importar
+    </button>
+    <input type="file" id="importar-arquivo" accept="application/json" />
+</div>
 
     <h2>Adicionar nova tarefa</h2>
     <div class="add-task">
