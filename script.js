@@ -218,3 +218,55 @@ function carregarAlteracoes() {
 
     alert("Alterações carregadas!");
 }
+
+function exportarJSON() {
+    const dados = localStorage.getItem("tarefas");
+    if (!dados) {
+        alert("Nenhuma alteração salva para exportar.");
+        return;
+    }
+
+    // Cria um blob com o conteúdo JSON
+    const blob = new Blob([dados], { type: "application/json" });
+
+    // Cria um link temporário para download
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "tarefas.json"; // nome do arquivo
+    document.body.appendChild(a);
+    a.click();
+
+    // Remove o link temporário
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function importarJSON() {
+    const input = document.getElementById("importar-arquivo");
+    const arquivo = input.files[0];
+
+    if (!arquivo) {
+        alert("Por favor, selecione um arquivo JSON para importar.");
+        return;
+    }
+
+    const leitor = new FileReader();
+    leitor.onload = function(e) {
+        try {
+            const dados = JSON.parse(e.target.result);
+
+            // Salva no localStorage
+            localStorage.setItem("tarefas", JSON.stringify(dados));
+
+            // Reconstrói as listas usando a função carregarAlteracoes()
+            carregarAlteracoes();
+
+            alert("Importação concluída com sucesso!");
+        } catch (erro) {
+            alert("Erro ao importar o arquivo. Verifique se é um JSON válido.");
+        }
+    };
+
+    leitor.readAsText(arquivo);
+}
