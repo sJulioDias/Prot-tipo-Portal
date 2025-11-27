@@ -1,35 +1,40 @@
+// Função utilitária para obter referências de lista, contador e barra
+function obterRefs(listaSelecionada) {
+    if (listaSelecionada === 'tarefa-analista-pleno') {
+        return { listaId: 'lista-pleno', contadorId: 'contador-pleno', barraId: 'barra-pleno' };
+    }
+    return { listaId: 'lista-junior', contadorId: 'contador-junior', barraId: 'barra-junior' };
+}
 
+// Atualiza contador e barra de progresso
 function atualizarContador(listaId, contadorId, barraId) {
-    // Ignora checkboxes desativados
-    const lista = document.querySelectorAll(`#${listaId} input[type="checkbox"]:not([disabled])`);
-    const feitas = document.querySelectorAll(`#${listaId} input[type="checkbox"]:checked:not([disabled])`).length;
-    const total = lista.length;
-    const percentual = total > 0 ? (feitas / total) * 100 : 0;
+    const lista = [...document.querySelectorAll(`#${listaId} input[type="checkbox"]:not([disabled])`)];
+    const tarefasConcluidas = lista.filter(cb => cb.checked).length;
+    const totalTarefas = lista.length;
+    const percentual = totalTarefas > 0 ? (tarefasConcluidas / totalTarefas) * 100 : 0;
 
     const barra = document.getElementById(barraId);
     barra.style.backgroundColor = percentual === 100 ? "#FFD700" : "#4CAF50";
     barra.style.width = `${percentual}%`;
 
-    document.getElementById(contadorId).textContent = `${feitas} tarefas de ${total} realizadas`;
+    document.getElementById(contadorId).textContent = `${tarefasConcluidas} tarefas de ${totalTarefas} realizadas`;
 }
 
-// Função para configurar comportamento do checkbox
+// Configura comportamento do checkbox
 function configurarCheckbox(checkbox, listaId, contadorId, barraId) {
     checkbox.addEventListener('change', () => {
         atualizarContador(listaId, contadorId, barraId);
-
-        // Aplica ou remove a classe .completed no <li>
         const li = checkbox.parentElement;
         li.classList.toggle('completed', checkbox.checked);
     });
 }
 
+// Configuração inicial das listas
 const listas = [
     { listaId: 'lista-pleno', contadorId: 'contador-pleno', barraId: 'barra-pleno' },
     { listaId: 'lista-junior', contadorId: 'contador-junior', barraId: 'barra-junior' }
 ];
 
-// Configura os checkboxes existentes
 listas.forEach(({ listaId, contadorId, barraId }) => {
     document.querySelectorAll(`#${listaId} input[type="checkbox"]`).forEach(checkbox => {
         configurarCheckbox(checkbox, listaId, contadorId, barraId);
@@ -37,6 +42,7 @@ listas.forEach(({ listaId, contadorId, barraId }) => {
     atualizarContador(listaId, contadorId, barraId);
 });
 
+// Adicionar nova tarefa
 function adicionarTarefa() {
     const tarefa = document.getElementById('new-task').value.trim();
     const listaSelecionada = document.querySelector('select').value;
@@ -46,16 +52,7 @@ function adicionarTarefa() {
         return;
     }
 
-    let listaId, contadorId, barraId;
-    if (listaSelecionada === 'tarefa-analista-pleno') {
-        listaId = 'lista-pleno';
-        contadorId = 'contador-pleno';
-        barraId = 'barra-pleno';
-    } else {
-        listaId = 'lista-junior';
-        contadorId = 'contador-junior';
-        barraId = 'barra-junior';
-    }
+    const { listaId, contadorId, barraId } = obterRefs(listaSelecionada);
 
     const li = document.createElement('li');
 
@@ -73,73 +70,62 @@ function adicionarTarefa() {
         atualizarContador(listaId, contadorId, barraId);
     });
 
-    li.appendChild(checkbox);
-    li.appendChild(texto);
-    li.appendChild(botaoExcluir);
-
+    li.append(checkbox, texto, botaoExcluir);
     document.getElementById(listaId).appendChild(li);
 
     document.getElementById('new-task').value = '';
-
     atualizarContador(listaId, contadorId, barraId);
 }
 
+// Marcar como "não se aplica"
 function naoSeAplica(botao) {
     const li = botao.parentElement;
     const checkbox = li.querySelector("input[type='checkbox']");
     const listaId = li.parentElement.id;
     const contadorId = listaId === 'lista-pleno' ? 'contador-pleno' : 'contador-junior';
     const barraId = listaId === 'lista-pleno' ? 'barra-pleno' : 'barra-junior';
-    
-    if (checkbox.disabled === true) {
-    checkbox.disabled = false; // ativa
-    li.classList = "task-list";
-    li.style.textDecoration = "";
-    li.style.opacity = "";
-    // Atualiza contador reativando o elemento
+
+    if (checkbox.disabled) {
+        checkbox.disabled = false;
+        li.classList.remove('inaplicavel');
+        li.classList.remove('completed');
         atualizarContador(listaId, contadorId, barraId);
-    return;
+        return;
     }
-    
-    li.style.textDecoration = "line-through";
-    li.style.opacity = "0.6";
 
-    checkbox.disabled = true; // desativa
-    checkbox.checked = false; // garante que não conte como feita
+    checkbox.disabled = true;
+    checkbox.checked = false;
     li.classList.add('inaplicavel');
-
-    // Atualiza contador ignorando checkbox desativado
-       atualizarContador(listaId, contadorId, barraId);
+    atualizarContador(listaId, contadorId, barraId);
 }
 
+// Editar nome da tarefa
 function editarNome(botao) {
     const li = botao.parentElement;
-    const textoNode = li.childNodes[1];
+    const textoNode = [...li.childNodes].find(node => node.nodeType === Node.TEXT_NODE);
     const textoAtual = textoNode.textContent.trim();
 
-    // Cria input para edição
     const input = document.createElement('input');
     input.type = 'text';
     input.value = textoAtual;
 
-    // Substitui o texto pelo input
     li.replaceChild(input, textoNode);
 
-    // Quando perder o foco ou pressionar Enter, salva
     input.addEventListener('blur', () => salvarEdicao(li, input));
-    input.addEventListener('keydown', (e) => {
+    input.addEventListener('keydown', e => {
         if (e.key === 'Enter') salvarEdicao(li, input);
     });
 
     input.focus();
 }
 
-function salvarEdicao(li, input) {
+const salvarEdicao = (li, input) => {
     const novoTexto = input.value.trim();
     const novoNode = document.createTextNode(" " + (novoTexto || "Tarefa sem nome"));
     li.replaceChild(novoNode, input);
-}
+};
 
+// Placeholder para salvar alterações
 function salvarAlteracoes() {
     alert('Função ainda não implementada :(');
 }
