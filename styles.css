@@ -78,6 +78,8 @@ li.completed {
 
 li.inaplicavel {
     background-color: #f3c8c8; 
+    text-decoration: line-through;
+    opacity: 0.6;
 }
 
 /* Inputs */
